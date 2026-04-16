@@ -1,0 +1,56 @@
+__pycache__/
+*.py[cod]
+.env
+.DS_Store
+_tmp_graph.html
+.ipynb_checkpoints/
+*-Copy*.ipynb
+
+# Umgebungsvarianten
+.env.*
+!.env.example
+*.env
+
+# Credentials und Keys allgemein
+*.key
+*.pem
+credentials.json
+secrets.yaml
+secrets.yml
+
+# Neo4j lokale Daten und Logs
+neo4j/data/
+neo4j/logs/
+neo4j/import/
+neo4j/plugins/
+*.dump
+
+# SQLite staging DB
+*.db
+*.sqlite
+*.sqlite3
+
+# Streamlit Session-State und Secrets
+.streamlit/secrets.toml
+
+# Python-Virtualenvs
+venv/
+.venv/
+env/
+ENV/
+
+# Lokale WAO-Runtime-Daten
+data/cache/
+data/exports/
+logs/
+*.log
+
+# IDE
+.vscode/
+.idea/
+*.swp
+
+# Build/Distribution
+dist/
+build/
+*.egg-info/

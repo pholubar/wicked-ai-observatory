@@ -1,0 +1,181 @@
+<html>
+    <head>
+        <meta charset="utf-8">
+        
+            <script src="lib/bindings/utils.js"></script>
+            <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/vis-network/9.1.2/dist/dist/vis-network.min.css" integrity="sha512-WgxfT5LWjfszlPHXRmBWHkV2eceiWTOBvrKCNbdgDYTHrT2AeLCGbF4sZlZw3UMN3WtL0tGUoIAKsu8mllg/XA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+            <script src="https://cdnjs.cloudflare.com/ajax/libs/vis-network/9.1.2/dist/vis-network.min.js" integrity="sha512-LnvoEWDFrqGHlHmDD2101OrLcbsfkrzoSpvtSQtxK3RMnRV0eOkhhBN2dXHKRrUU8p2DGRTk35n4O8nWSVe1mQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+            
+        
+<center>
+<h1></h1>
+</center>
+
+<!-- <link rel="stylesheet" href="../node_modules/vis/dist/vis.min.css" type="text/css" />
+<script type="text/javascript" src="../node_modules/vis/dist/vis.js"> </script>-->
+        <link
+          href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta3/dist/css/bootstrap.min.css"
+          rel="stylesheet"
+          integrity="sha384-eOJMYsd53ii+scO/bJGFsiCZc+5NDVN2yr8+0RDqr0Ql0h+rP48ckxlpbzKgwra6"
+          crossorigin="anonymous"
+        />
+        <script
+          src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta3/dist/js/bootstrap.bundle.min.js"
+          integrity="sha384-JEW9xMcG8R+pH31jmWH6WWP0WintQrMb4s7ZOdauHnUtxwoG2vI5DkLtS3qm9Ekf"
+          crossorigin="anonymous"
+        ></script>
+
+
+        <center>
+          <h1></h1>
+        </center>
+        <style type="text/css">
+
+             #mynetwork {
+                 width: 100%;
+                 height: 700px;
+                 background-color: #ffffff;
+                 border: 1px solid lightgray;
+                 position: relative;
+                 float: left;
+             }
+
+             
+
+             
+
+             
+        </style>
+    </head>
+
+
+    <body>
+        <div class="card" style="width: 100%">
+            
+            
+            <div id="mynetwork" class="card-body"></div>
+        </div>
+
+        
+        
+
+        <script type="text/javascript">
+
+              // initialize global variables.
+              var edges;
+              var nodes;
+              var allNodes;
+              var allEdges;
+              var nodeColors;
+              var originalNodes;
+              var network;
+              var container;
+              var options, data;
+              var filter = {
+                  item : '',
+                  property : '',
+                  value : []
+              };
+
+              
+
+              
+
+              // This method is responsible for drawing the graph, returns the drawn network
+              function drawGraph() {
+                  var container = document.getElementById('mynetwork');
+
+                  
+
+                  // parsing and collecting nodes and edges from the python
+                  nodes = new vis.DataSet([{"color": "#BA7517", "font": {"color": "#333333"}, "id": "Regulatory Capture", "label": "Regulatory Capture", "shape": "dot", "size": 18.2, "title": "Political | Score: 91"}, {"color": "#BA7517", "font": {"color": "#333333"}, "id": "AI-enabled Autocracy", "label": "AI-enabled Autocracy", "shape": "dot", "size": 16.4, "title": "Political | Score: 82"}, {"color": "#BA7517", "font": {"color": "#333333"}, "id": "Election Integrity", "label": "Election Integrity", "shape": "dot", "size": 15.8, "title": "Political | Score: 79"}, {"color": "#639922", "font": {"color": "#333333"}, "id": "Compute Concentration", "label": "Compute Concentration", "shape": "dot", "size": 13.2, "title": "Economic | Score: 66"}, {"color": "#639922", "font": {"color": "#333333"}, "id": "Market Concentration", "label": "Market Concentration", "shape": "dot", "size": 15.8, "title": "Economic | Score: 79"}, {"color": "#639922", "font": {"color": "#333333"}, "id": "Wealth Extraction", "label": "Wealth Extraction", "shape": "dot", "size": 15.2, "title": "Economic | Score: 76"}, {"color": "#1D9E75", "font": {"color": "#333333"}, "id": "Alignment Failures", "label": "Alignment Failures", "shape": "dot", "size": 17.6, "title": "Technical | Score: 88"}, {"color": "#378ADD", "font": {"color": "#333333"}, "id": "Liability Gaps", "label": "Liability Gaps", "shape": "dot", "size": 13.4, "title": "Legal | Score: 67"}, {"color": "#7F77DD", "font": {"color": "#333333"}, "id": "Bias and Fairness", "label": "Bias and Fairness", "shape": "dot", "size": 14.6, "title": "Ethical | Score: 73"}, {"color": "#7F77DD", "font": {"color": "#333333"}, "id": "Autonomy Erosion", "label": "Autonomy Erosion", "shape": "dot", "size": 14.2, "title": "Ethical | Score: 71"}, {"color": "#7F77DD", "font": {"color": "#333333"}, "id": "Accountability Gaps", "label": "Accountability Gaps", "shape": "dot", "size": 18.0, "title": "Ethical | Score: 90"}, {"color": "#D85A30", "font": {"color": "#333333"}, "id": "Epistemic Breakdown", "label": "Epistemic Breakdown", "shape": "dot", "size": 16.6, "title": "Societal | Score: 83"}, {"color": "#D85A30", "font": {"color": "#333333"}, "id": "Labour Displacement", "label": "Labour Displacement", "shape": "dot", "size": 15.8, "title": "Societal | Score: 79"}, {"color": "#D85A30", "font": {"color": "#333333"}, "id": "Inequality Amplification", "label": "Inequality Amplification", "shape": "dot", "size": 13.0, "title": "Societal | Score: 65"}, {"color": "#AFA9EC", "font": {"color": "#333333"}, "id": "Skill Dependency", "label": "Skill Dependency", "shape": "dot", "size": 11.6, "title": "Pedagogical | Score: 58"}, {"color": "#B4B2A9", "font": {"color": "#333333"}, "id": "Knowledge Quality", "label": "Knowledge Quality", "shape": "dot", "size": 15.2, "title": "Epistemic | Score: 76"}, {"color": "#D4537E", "font": {"color": "#333333"}, "id": "Global Governance Gaps", "label": "Global Governance Gaps", "shape": "dot", "size": 15.8, "title": "Global | Score: 79"}, {"color": "#D4537E", "font": {"color": "#333333"}, "id": "Access Asymmetry", "label": "Access Asymmetry", "shape": "dot", "size": 12.6, "title": "Global | Score: 63"}, {"color": "#D4537E", "font": {"color": "#333333"}, "id": "Geopolitical Rivalry", "label": "Geopolitical Rivalry", "shape": "dot", "size": 15.0, "title": "Global | Score: 75"}, {"color": "#97C459", "font": {"color": "#333333"}, "id": "Compute Energy Use", "label": "Compute Energy Use", "shape": "dot", "size": 11.0, "title": "Environmental | Score: 55"}, {"color": "#5DCAA5", "font": {"color": "#333333"}, "id": "Deterrence Instability", "label": "Deterrence Instability", "shape": "dot", "size": 16.6, "title": "Peace | Score: 83"}, {"color": "#5DCAA5", "font": {"color": "#333333"}, "id": "Peacebuilding Potential", "label": "Peacebuilding Potential", "shape": "dot", "size": 8.4, "title": "Peace | Score: 42"}, {"color": "#E24B4A", "font": {"color": "#333333"}, "id": "Autonomous Weapon Systems", "label": "Autonomous Weapon Systems", "shape": "dot", "size": 18.0, "title": "War | Score: 90"}, {"color": "#E24B4A", "font": {"color": "#333333"}, "id": "Hybrid Warfare", "label": "Hybrid Warfare", "shape": "dot", "size": 15.4, "title": "War | Score: 77"}, {"color": "#E24B4A", "font": {"color": "#333333"}, "id": "Compressed Kill Chains", "label": "Compressed Kill Chains", "shape": "dot", "size": 19.2, "title": "War | Score: 96"}, {"color": "#7F77DD", "font": {"color": "#333333"}, "id": "Algorithmic Discrimination", "label": "Algorithmic Discrimination", "shape": "dot", "size": 16.2, "title": "Ethical | Score: 81"}, {"color": "#97C459", "font": {"color": "#333333"}, "id": "Resource Extraction", "label": "Resource Extraction", "shape": "dot", "size": 12.2, "title": "Environmental | Score: 61"}, {"color": "#97C459", "font": {"color": "#333333"}, "id": "Carbon Footprint AI", "label": "Carbon Footprint AI", "shape": "dot", "size": 13.6, "title": "Environmental | Score: 68"}, {"color": "#D4537E", "font": {"color": "#333333"}, "id": "Intergenerational Equity", "label": "Intergenerational Equity", "shape": "dot", "size": 12.6, "title": "Global | Score: 63"}, {"color": "#FF8C00", "font": {"color": "#333333"}, "id": "European Commission", "label": "European Commission", "shape": "diamond", "size": 25.5}, {"color": "#FF8C00", "font": {"color": "#333333"}, "id": "EU Parliament", "label": "EU Parliament", "shape": "diamond", "size": 24.0}, {"color": "#FF8C00", "font": {"color": "#333333"}, "id": "Big Tech", "label": "Big Tech", "shape": "diamond", "size": 27.0}, {"color": "#FF8C00", "font": {"color": "#333333"}, "id": "Civil Society", "label": "Civil Society", "shape": "diamond", "size": 16.5}, {"color": "#FF8C00", "font": {"color": "#333333"}, "id": "US Government", "label": "US Government", "shape": "diamond", "size": 26.4}, {"color": "#FF8C00", "font": {"color": "#333333"}, "id": "China", "label": "China", "shape": "diamond", "size": 25.5}, {"color": "#FF8C00", "font": {"color": "#333333"}, "id": "UN / IAEA", "label": "UN / IAEA", "shape": "diamond", "size": 19.5}, {"color": "#FF8C00", "font": {"color": "#333333"}, "id": "ICRC", "label": "ICRC", "shape": "diamond", "size": 18.0}, {"color": "#FF8C00", "font": {"color": "#333333"}, "id": "Academic Research", "label": "Academic Research", "shape": "diamond", "size": 21.0}, {"color": "#FF8C00", "font": {"color": "#333333"}, "id": "Media", "label": "Media", "shape": "diamond", "size": 19.5}, {"color": "#FF8C00", "font": {"color": "#333333"}, "id": "Affected Communities", "label": "Affected Communities", "shape": "diamond", "size": 10.5}]);
+                  edges = new vis.DataSet([{"arrows": "to", "from": "Regulatory Capture", "title": "AMPLIFIES", "to": "Alignment Failures"}, {"arrows": "to", "from": "Regulatory Capture", "title": "AMPLIFIES", "to": "Liability Gaps"}, {"arrows": "to", "from": "AI-enabled Autocracy", "title": "AMPLIFIES", "to": "Regulatory Capture"}, {"arrows": "to", "from": "AI-enabled Autocracy", "title": "AMPLIFIES", "to": "Epistemic Breakdown"}, {"arrows": "to", "from": "Election Integrity", "title": "CONFLICTS_WITH", "to": "AI-enabled Autocracy"}, {"arrows": "to", "from": "Election Integrity", "title": "CONFLICTS_WITH", "to": "Epistemic Breakdown"}, {"arrows": "to", "from": "Compute Concentration", "title": "AMPLIFIES", "to": "Regulatory Capture"}, {"arrows": "to", "from": "Compute Concentration", "title": "AMPLIFIES", "to": "Alignment Failures"}, {"arrows": "to", "from": "Compute Concentration", "title": "AMPLIFIES", "to": "Resource Extraction"}, {"arrows": "to", "from": "Compute Concentration", "title": "AMPLIFIES", "to": "Carbon Footprint AI"}, {"arrows": "to", "from": "Compute Concentration", "title": "CONFLICTS_WITH", "to": "Global Governance Gaps"}, {"arrows": "to", "from": "Market Concentration", "title": "AMPLIFIES", "to": "Regulatory Capture"}, {"arrows": "to", "from": "Market Concentration", "title": "AMPLIFIES", "to": "Compute Concentration"}, {"arrows": "to", "from": "Wealth Extraction", "title": "AMPLIFIES", "to": "Inequality Amplification"}, {"arrows": "to", "from": "Wealth Extraction", "title": "AMPLIFIES", "to": "Access Asymmetry"}, {"arrows": "to", "from": "Alignment Failures", "title": "AMPLIFIES", "to": "Autonomous Weapon Systems"}, {"arrows": "to", "from": "Alignment Failures", "title": "CONFLICTS_WITH", "to": "Regulatory Capture"}, {"arrows": "to", "from": "Liability Gaps", "title": "AMPLIFIES", "to": "Algorithmic Discrimination"}, {"arrows": "to", "from": "Liability Gaps", "title": "CONFLICTS_WITH", "to": "Alignment Failures"}, {"arrows": "to", "from": "Bias and Fairness", "title": "AMPLIFIES", "to": "Epistemic Breakdown"}, {"arrows": "to", "from": "Bias and Fairness", "title": "AMPLIFIES", "to": "Algorithmic Discrimination"}, {"arrows": "to", "from": "Autonomy Erosion", "title": "AMPLIFIES", "to": "AI-enabled Autocracy"}, {"arrows": "to", "from": "Autonomy Erosion", "title": "AMPLIFIES", "to": "Epistemic Breakdown"}, {"arrows": "to", "from": "Accountability Gaps", "title": "AMPLIFIES", "to": "Liability Gaps"}, {"arrows": "to", "from": "Accountability Gaps", "title": "AMPLIFIES", "to": "Bias and Fairness"}, {"arrows": "to", "from": "Epistemic Breakdown", "title": "AMPLIFIES", "to": "Regulatory Capture"}, {"arrows": "to", "from": "Labour Displacement", "title": "AMPLIFIES", "to": "Epistemic Breakdown"}, {"arrows": "to", "from": "Inequality Amplification", "title": "AMPLIFIES", "to": "Labour Displacement"}, {"arrows": "to", "from": "Inequality Amplification", "title": "AMPLIFIES", "to": "Access Asymmetry"}, {"arrows": "to", "from": "Inequality Amplification", "title": "AMPLIFIES", "to": "Intergenerational Equity"}, {"arrows": "to", "from": "Skill Dependency", "title": "AMPLIFIES", "to": "Compute Concentration"}, {"arrows": "to", "from": "Skill Dependency", "title": "AMPLIFIES", "to": "Market Concentration"}, {"arrows": "to", "from": "Knowledge Quality", "title": "AMPLIFIES", "to": "Epistemic Breakdown"}, {"arrows": "to", "from": "Knowledge Quality", "title": "CONFLICTS_WITH", "to": "Alignment Failures"}, {"arrows": "to", "from": "Global Governance Gaps", "title": "AMPLIFIES", "to": "Regulatory Capture"}, {"arrows": "to", "from": "Global Governance Gaps", "title": "AMPLIFIES", "to": "Deterrence Instability"}, {"arrows": "to", "from": "Global Governance Gaps", "title": "AMPLIFIES", "to": "Autonomous Weapon Systems"}, {"arrows": "to", "from": "Access Asymmetry", "title": "AMPLIFIES", "to": "Inequality Amplification"}, {"arrows": "to", "from": "Access Asymmetry", "title": "AMPLIFIES", "to": "Global Governance Gaps"}, {"arrows": "to", "from": "Access Asymmetry", "title": "AMPLIFIES", "to": "Intergenerational Equity"}, {"arrows": "to", "from": "Geopolitical Rivalry", "title": "AMPLIFIES", "to": "Compute Concentration"}, {"arrows": "to", "from": "Geopolitical Rivalry", "title": "AMPLIFIES", "to": "Deterrence Instability"}, {"arrows": "to", "from": "Geopolitical Rivalry", "title": "AMPLIFIES", "to": "Autonomous Weapon Systems"}, {"arrows": "to", "from": "Geopolitical Rivalry", "title": "AMPLIFIES", "to": "Resource Extraction"}, {"arrows": "to", "from": "Geopolitical Rivalry", "title": "CONFLICTS_WITH", "to": "Global Governance Gaps"}, {"arrows": "to", "from": "Compute Energy Use", "title": "AMPLIFIES", "to": "Compute Concentration"}, {"arrows": "to", "from": "Compute Energy Use", "title": "AMPLIFIES", "to": "Geopolitical Rivalry"}, {"arrows": "to", "from": "Compute Energy Use", "title": "AMPLIFIES", "to": "Carbon Footprint AI"}, {"arrows": "to", "from": "Peacebuilding Potential", "title": "CONFLICTS_WITH", "to": "Autonomous Weapon Systems"}, {"arrows": "to", "from": "Peacebuilding Potential", "title": "CONFLICTS_WITH", "to": "Compressed Kill Chains"}, {"arrows": "to", "from": "Autonomous Weapon Systems", "title": "AMPLIFIES", "to": "Deterrence Instability"}, {"arrows": "to", "from": "Hybrid Warfare", "title": "AMPLIFIES", "to": "AI-enabled Autocracy"}, {"arrows": "to", "from": "Hybrid Warfare", "title": "AMPLIFIES", "to": "Epistemic Breakdown"}, {"arrows": "to", "from": "Hybrid Warfare", "title": "AMPLIFIES", "to": "Deterrence Instability"}, {"arrows": "to", "from": "Compressed Kill Chains", "title": "AMPLIFIES", "to": "Deterrence Instability"}, {"arrows": "to", "from": "Compressed Kill Chains", "title": "AMPLIFIES", "to": "Autonomous Weapon Systems"}, {"arrows": "to", "from": "Compressed Kill Chains", "title": "CONFLICTS_WITH", "to": "Peacebuilding Potential"}, {"arrows": "to", "from": "European Commission", "title": "POSITIONS_ON", "to": "Regulatory Capture"}, {"arrows": "to", "from": "European Commission", "title": "POSITIONS_ON", "to": "Alignment Failures"}, {"arrows": "to", "from": "European Commission", "title": "POSITIONS_ON", "to": "Autonomy Erosion"}, {"arrows": "to", "from": "European Commission", "title": "POSITIONS_ON", "to": "Geopolitical Rivalry"}, {"arrows": "to", "from": "EU Parliament", "title": "POSITIONS_ON", "to": "Regulatory Capture"}, {"arrows": "to", "from": "EU Parliament", "title": "POSITIONS_ON", "to": "Election Integrity"}, {"arrows": "to", "from": "Big Tech", "title": "POSITIONS_ON", "to": "Regulatory Capture"}, {"arrows": "to", "from": "Big Tech", "title": "POSITIONS_ON", "to": "AI-enabled Autocracy"}, {"arrows": "to", "from": "Big Tech", "title": "POSITIONS_ON", "to": "Market Concentration"}, {"arrows": "to", "from": "Big Tech", "title": "POSITIONS_ON", "to": "Alignment Failures"}, {"arrows": "to", "from": "Civil Society", "title": "POSITIONS_ON", "to": "Regulatory Capture"}, {"arrows": "to", "from": "Civil Society", "title": "POSITIONS_ON", "to": "AI-enabled Autocracy"}, {"arrows": "to", "from": "Civil Society", "title": "POSITIONS_ON", "to": "Election Integrity"}, {"arrows": "to", "from": "Civil Society", "title": "POSITIONS_ON", "to": "Bias and Fairness"}, {"arrows": "to", "from": "Civil Society", "title": "POSITIONS_ON", "to": "Autonomy Erosion"}, {"arrows": "to", "from": "US Government", "title": "POSITIONS_ON", "to": "Compute Concentration"}, {"arrows": "to", "from": "US Government", "title": "POSITIONS_ON", "to": "Alignment Failures"}, {"arrows": "to", "from": "US Government", "title": "POSITIONS_ON", "to": "Autonomous Weapon Systems"}, {"arrows": "to", "from": "China", "title": "POSITIONS_ON", "to": "Compute Concentration"}, {"arrows": "to", "from": "China", "title": "POSITIONS_ON", "to": "Global Governance Gaps"}, {"arrows": "to", "from": "China", "title": "POSITIONS_ON", "to": "Autonomous Weapon Systems"}, {"arrows": "to", "from": "UN / IAEA", "title": "POSITIONS_ON", "to": "Global Governance Gaps"}, {"arrows": "to", "from": "UN / IAEA", "title": "POSITIONS_ON", "to": "Deterrence Instability"}, {"arrows": "to", "from": "UN / IAEA", "title": "POSITIONS_ON", "to": "Autonomous Weapon Systems"}, {"arrows": "to", "from": "ICRC", "title": "POSITIONS_ON", "to": "Peacebuilding Potential"}, {"arrows": "to", "from": "ICRC", "title": "POSITIONS_ON", "to": "Autonomous Weapon Systems"}, {"arrows": "to", "from": "ICRC", "title": "POSITIONS_ON", "to": "Compressed Kill Chains"}, {"arrows": "to", "from": "Academic Research", "title": "POSITIONS_ON", "to": "Election Integrity"}, {"arrows": "to", "from": "Academic Research", "title": "POSITIONS_ON", "to": "Compute Concentration"}, {"arrows": "to", "from": "Academic Research", "title": "POSITIONS_ON", "to": "Alignment Failures"}, {"arrows": "to", "from": "Academic Research", "title": "POSITIONS_ON", "to": "Bias and Fairness"}, {"arrows": "to", "from": "Academic Research", "title": "POSITIONS_ON", "to": "Accountability Gaps"}, {"arrows": "to", "from": "Media", "title": "POSITIONS_ON", "to": "Epistemic Breakdown"}, {"arrows": "to", "from": "Media", "title": "POSITIONS_ON", "to": "Hybrid Warfare"}, {"arrows": "to", "from": "Algorithmic Discrimination", "title": "AMPLIFIES", "to": "Accountability Gaps"}, {"arrows": "to", "from": "Algorithmic Discrimination", "title": "AMPLIFIES", "to": "Inequality Amplification"}, {"arrows": "to", "from": "Affected Communities", "title": "POSITIONS_ON", "to": "Bias and Fairness"}, {"arrows": "to", "from": "Affected Communities", "title": "POSITIONS_ON", "to": "Inequality Amplification"}, {"arrows": "to", "from": "Affected Communities", "title": "POSITIONS_ON", "to": "Algorithmic Discrimination"}, {"arrows": "to", "from": "Resource Extraction", "title": "AMPLIFIES", "to": "Intergenerational Equity"}, {"arrows": "to", "from": "Carbon Footprint AI", "title": "AMPLIFIES", "to": "Intergenerational Equity"}]);
+
+                  nodeColors = {};
+                  allNodes = nodes.get({ returnType: "Object" });
+                  for (nodeId in allNodes) {
+                    nodeColors[nodeId] = allNodes[nodeId].color;
+                  }
+                  allEdges = edges.get({ returnType: "Object" });
+                  // adding nodes and edges to the graph
+                  data = {nodes: nodes, edges: edges};
+
+                  var options = {
+    "configure": {
+        "enabled": false
+    },
+    "edges": {
+        "color": {
+            "inherit": true
+        },
+        "smooth": {
+            "enabled": true,
+            "type": "dynamic"
+        }
+    },
+    "interaction": {
+        "dragNodes": true,
+        "hideEdgesOnDrag": false,
+        "hideNodesOnDrag": false
+    },
+    "physics": {
+        "enabled": true,
+        "stabilization": {
+            "enabled": true,
+            "fit": true,
+            "iterations": 1000,
+            "onlyDynamicEdges": false,
+            "updateInterval": 50
+        }
+    }
+};
+
+                  
+
+
+                  
+
+                  network = new vis.Network(container, data, options);
+
+                  
+
+                  
+
+                  
+
+
+                  
+
+                  return network;
+
+              }
+              drawGraph();
+        </script>
+    <div style="position:absolute;top:16px;right:16px;background:white;border:1px solid #ddd;border-radius:8px;padding:14px 18px;font-family:Arial,sans-serif;font-size:12px;z-index:9999;box-shadow:0 2px 8px rgba(0,0,0,0.1);min-width:200px;">
+<div style="font-weight:bold;margin-bottom:10px;font-size:13px;">Wicked AI Observatory</div>
+<div style="font-weight:bold;color:#666;margin-bottom:6px;font-size:11px;">Dimensions</div>
+<div style="display:grid;grid-template-columns:14px 1fr;gap:4px 8px;align-items:center;margin-bottom:12px;">
+<div style="width:12px;height:12px;border-radius:50%;background:#BA7517;"></div><span>Political</span>
+<div style="width:12px;height:12px;border-radius:50%;background:#1D9E75;"></div><span>Technical</span>
+<div style="width:12px;height:12px;border-radius:50%;background:#639922;"></div><span>Economic</span>
+<div style="width:12px;height:12px;border-radius:50%;background:#378ADD;"></div><span>Legal</span>
+<div style="width:12px;height:12px;border-radius:50%;background:#7F77DD;"></div><span>Ethical</span>
+<div style="width:12px;height:12px;border-radius:50%;background:#D85A30;"></div><span>Societal</span>
+<div style="width:12px;height:12px;border-radius:50%;background:#D4537E;"></div><span>Global</span>
+<div style="width:12px;height:12px;border-radius:50%;background:#E24B4A;"></div><span>War</span>
+<div style="width:12px;height:12px;border-radius:50%;background:#5DCAA5;"></div><span>Peace</span>
+<div style="width:12px;height:12px;border-radius:50%;background:#97C459;"></div><span>Environmental</span>
+<div style="width:12px;height:12px;border-radius:50%;background:#AFA9EC;"></div><span>Pedagogical</span>
+<div style="width:12px;height:12px;border-radius:50%;background:#B4B2A9;"></div><span>Epistemic</span>
+</div>
+<div style="font-weight:bold;color:#666;margin-bottom:6px;font-size:11px;">Edges</div>
+<div style="display:grid;grid-template-columns:24px 1fr;gap:4px 8px;align-items:center;">
+<div style="height:2px;background:#AAAAAA;"></div><span>AMPLIFIES</span>
+<div style="height:2px;background:#E24B4A;"></div><span>CONFLICTS_WITH</span>
+<div style="height:2px;background:#FF8C00;"></div><span>POSITIONS_ON</span>
+
+</div>
+<div style="margin-top:12px;color:#999;font-size:10px;border-top:1px solid #eee;padding-top:8px;">
+Date: 2026-04-14 · WAO v1.0 · struktur
+</div></div></body>
+</html>

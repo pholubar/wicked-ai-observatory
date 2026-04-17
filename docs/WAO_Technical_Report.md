@@ -7,7 +7,7 @@
 **Peter Holubar**
 BOKU University Vienna
 `peter.holubar@boku.ac.at`
-ORCID: *(to be added)*
+ORCID: https://orcid.org/0000-0003-1613-6466
 
 **Keywords:** wicked problems, AI governance, multi-agent systems, knowledge graphs, Neo4j, human-in-the-loop, LLM classification, reproducibility, research software
 
@@ -482,7 +482,7 @@ Please cite this technical report using the Zenodo DOI assigned to this record.
 Holubar, P. (2026). Wicked AI Observatory: A Multi-Agent System for
 Dynamic Mapping of Wicked Problems in Artificial Intelligence —
 Architecture and Setup. Technical Report, Version 0.7.
-BOKU University Vienna. Zenodo. https://doi.org/<DOI-from-Zenodo>
+BOKU University Vienna. Zenodo. (https://doi.org/10.5281/zenodo.19627548)>
 ```
 
 BibTeX:
@@ -498,8 +498,8 @@ BibTeX:
   number       = {Version 0.7},
   year         = {2026},
   month        = {April},
-  doi          = {<DOI-from-Zenodo>},
-  url          = {https://doi.org/<DOI-from-Zenodo>}
+  doi          = {<10.5281/zenodo.19627548>},
+  url          = {(https://doi.org/10.5281/zenodo.19627548)>}
 }
 ```
 

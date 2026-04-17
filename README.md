@@ -179,7 +179,7 @@ If you use WAO or its factor registry in academic work, please cite the forthcom
   number       = {Version 0.7},
   year         = {2026},
   month        = {April},
-  doi          = {<DOI-from-Zenodo>},
+  doi          = {10.5281/zenodo.19627548},
   url          = {https://doi.org/10.5281/zenodo.19627548}
 }
 ```

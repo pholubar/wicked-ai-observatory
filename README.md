@@ -5,7 +5,7 @@
 The Wicked AI Observatory (WAO) continuously monitors, classifies, and maps AI governance challenges across thirteen dimensions using a Neo4j knowledge graph, LLM-based classification, and human-in-the-loop calibration.
 
 🌐 **Project website:** [wicked-ai-observatory.org](https://wicked-ai-observatory.org)
-📄 **Technical Report:** [Zenodo DOI forthcoming]
+📄 **Technical Report:** [10.5281/zenodo.19627548]
 
 ---
 
@@ -180,7 +180,7 @@ If you use WAO or its factor registry in academic work, please cite the forthcom
   year         = {2026},
   month        = {April},
   doi          = {<DOI-from-Zenodo>},
-  url          = {https://doi.org/<DOI-from-Zenodo>}
+  url          = {https://doi.org/10.5281/zenodo.19627548}
 }
 ```
 
